@@ -13,7 +13,7 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   const rounded = useTransform(count, (latest) => Math.round(latest));
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-20px" });
 
   useEffect(() => {
     if (isInView) {
@@ -48,7 +48,7 @@ export default function Results() {
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-20px" }}
               transition={{ delay: index * 0.1 }}
               className="text-center group"
             >

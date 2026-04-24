@@ -2,7 +2,7 @@ export default function Ticker() {
   const text = "SITES THAT PROFIT • COPY THAT CONVERTS • PRESENCE THAT POSITIONS • DIGITAL SOPHISTICATION • REAL RESULTS • ";
   
   return (
-    <div className="relative w-full bg-transparent backdrop-blur-sm border-y border-remy-sand/10 py-6 overflow-hidden z-50">
+    <div className="relative w-full bg-[#0b0b0b] backdrop-blur-sm border-y border-remy-sand/10 py-6 overflow-hidden z-50">
       <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-remy-black to-transparent z-10" />
       <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-remy-black to-transparent z-10" />
       

@@ -4,7 +4,7 @@ export default function Hero() {
   const particles = Array.from({ length: 20 });
 
   return (
-    <section id="hero" className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-6 md:px-16 pt-20">
+    <section id="hero" className="relative min-h-screen w-full flex flex-col items-center justify-center text-center px-6 md:px-16 pt-32 md:pt-40">
       {/* Background & Transition Wrapper */}
       <div className="absolute inset-0 z-0 [mask-image:linear-gradient(to_bottom,black_85%,transparent_100%)]">
         {/* Background Image with Parallax Effect */}

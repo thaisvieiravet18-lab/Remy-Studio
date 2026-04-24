@@ -25,14 +25,14 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`sticky top-0 left-0 w-full z-[1000] transition-all duration-500 py-3 px-4 md:px-8 ${
-        scrolled ? 'bg-[#0b0b0b]/90 backdrop-blur-xl py-2 border-b border-remy-sand/5' : 'bg-transparent'
+      className={`sticky top-0 left-0 w-full z-[1000] transition-all duration-500 py-2 px-2 md:px-6 ${
+        scrolled ? 'bg-[#0b0b0b]/95 backdrop-blur-xl py-1 border-b border-remy-sand/10' : 'bg-transparent'
       }`}
     >
       <div className="w-full flex items-center justify-between">
-        <a href="#hero" className="flex items-center gap-3 group">
-          <Logo className="w-32 h-32 group-hover:scale-110 transition-transform duration-500" />
-          <span className="text-[16px] font-cinzel font-bold text-white tracking-[0.25em]">
+        <a href="#hero" className="flex items-center gap-1 group">
+          <Logo className="w-20 h-20 md:w-24 md:h-24 -my-6 md:-my-8 group-hover:scale-110 transition-transform duration-500" />
+          <span className="text-[14px] md:text-[18px] font-cinzel font-bold text-white tracking-[0.25em]">
             REMY STUDIO
           </span>
         </a>
