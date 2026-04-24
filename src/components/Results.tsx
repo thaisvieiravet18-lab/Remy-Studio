@@ -5,7 +5,7 @@ const stats = [
   { value: 120, suffix: '+', label: 'Projects delivered' },
   { value: 85, suffix: '%', label: 'Engagement increase' },
   { value: 3, suffix: 'x', label: 'More leads on average' },
-  { value: 100, suffix: '%', label: 'Focused on health' },
+  { value: 100, suffix: '%', label: 'Veterinary focused' },
 ];
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {

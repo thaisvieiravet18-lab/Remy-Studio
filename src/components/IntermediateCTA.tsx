@@ -10,7 +10,7 @@ export default function IntermediateCTA() {
           viewport={{ once: true }}
           className="text-2xl md:text-4xl font-cinzel text-white mb-10 leading-tight"
         >
-          Does your current site <span className="text-remy-sand italic">drive away</span> or <span className="text-remy-sand">attract</span> high-value patients?
+          Does your current site <span className="text-remy-sand italic">drive away</span> or <span className="text-remy-sand">attract</span> high-value pet owners?
         </motion.h2>
         
         <motion.div

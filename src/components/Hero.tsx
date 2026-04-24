@@ -136,7 +136,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
           className="text-lg md:text-xl text-white/80 font-poppins font-normal max-w-[620px] mx-auto mb-12 leading-[1.75] tracking-[0.01em]"
         >
-          Websites, systems, and strategies that grow healthcare professionals every day — without relying on referrals.
+          Websites, systems, and strategies that grow Veterinary professionals every day — without relying on referrals.
         </motion.p>
         
         {/* Buttons */}

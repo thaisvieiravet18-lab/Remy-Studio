@@ -14,7 +14,7 @@ const services = [
   },
   {
     title: 'Engaging Reels',
-    description: 'Strategic visual content that increases reach and attracts patients every day with editorial aesthetics.',
+    description: 'Strategic visual content that increases reach and attracts pet owners every day with editorial aesthetics.',
     icon: Video,
   },
 ];

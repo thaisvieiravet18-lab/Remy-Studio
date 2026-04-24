@@ -7,13 +7,13 @@ const REELS_DATA = [
     id: 1,
     bg: '#1a0a2e',
     youtubeId: 'ayz5ZfcZ8mk',
-    duration: 125
+    duration: 155
   },
   {
     id: 2,
     bg: '#0a1a0a',
     youtubeId: 'zI8fmoLBxzg',
-    duration: 157
+    duration: 187
   }
 ];
 
@@ -21,6 +21,7 @@ export default function ReelsShowcase() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const nextReel = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % REELS_DATA.length);
@@ -32,7 +33,8 @@ export default function ReelsShowcase() {
 
   const toggleSound = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsMuted(!isMuted);
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
     setHasInteracted(true);
   };
 
@@ -40,6 +42,41 @@ export default function ReelsShowcase() {
     setIsMuted(false);
     setHasInteracted(true);
   };
+
+  // Sync YouTube Player state
+  useEffect(() => {
+    if (hasInteracted && iframeRef.current?.contentWindow) {
+      const targetMute = isMuted;
+      
+      const sendCommand = () => {
+        if (!iframeRef.current?.contentWindow) return;
+        
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ 
+            event: "command", 
+            func: targetMute ? "mute" : "unMute",
+            args: []
+          }), 
+          "*"
+        );
+        
+        if (!targetMute) {
+          iframeRef.current.contentWindow.postMessage(
+            JSON.stringify({ 
+              event: "command", 
+              func: "setVolume",
+              args: [100]
+            }), 
+            "*"
+          );
+        }
+      };
+
+      sendCommand();
+      const timeout = setTimeout(sendCommand, 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, isMuted, hasInteracted]);
 
   useEffect(() => {
     const timer = setInterval(nextReel, (REELS_DATA[currentIndex].duration || 30) * 1000);
@@ -65,7 +102,7 @@ export default function ReelsShowcase() {
           </div>
           
           <p className="text-base md:text-lg text-white/50 leading-[1.8] max-w-lg font-poppins">
-            Strategic visual content scripted with mental triggers and persuasive copy — made to attract patients every day.
+            Strategic visual content scripted with mental triggers and persuasive copy — made to attract pet owners every day.
           </p>
 
           <ul className="space-y-4">
@@ -121,40 +158,23 @@ export default function ReelsShowcase() {
             <div className="flex-1 bg-black rounded-[42px] overflow-hidden relative">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={currentIndex} // RECARREGA APENAS NA TROCA DE VÍDEO PARA NÃO "TRAVAR"
+                  key={currentIndex} 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.4 }}
                   className="absolute inset-0 bg-black"
                 >
-                  <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+                  <div className="absolute inset-0 w-full h-full overflow-hidden">
                     <iframe
-                      src={`https://www.youtube.com/embed/${REELS_DATA[currentIndex].youtubeId}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${REELS_DATA[currentIndex].youtubeId}&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&playsinline=1`}
+                      ref={iframeRef}
+                      src={`https://www.youtube.com/embed/${REELS_DATA[currentIndex].youtubeId}?autoplay=1&mute=0&controls=0&loop=1&playlist=${REELS_DATA[currentIndex].youtubeId}&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1&origin=${window.location.origin}`}
                       frameBorder="0"
                       allow="autoplay"
-                      sandbox="allow-forms allow-scripts allow-same-origin allow-presentation"
-                      className="absolute w-[220%] h-[120%] -left-[60%] -top-[10%] pointer-events-none"
+                      className="absolute w-[130%] h-[130%] -left-[15%] -top-[15%]"
                       title="YouTube Reels"
                     />
-                    {/* Transparent Overlay to block YouTube UI interactions */}
-                    <div className="absolute inset-0 z-10 bg-transparent" />
                   </div>
-                  
-                  {/* Overlay de Interação Inicial */}
-                  {!hasInteracted && (
-                    <button 
-                      onClick={handleInitialInteraction}
-                      className="absolute inset-0 z-50 bg-black/60 backdrop-blur-[6px] flex flex-col items-center justify-center gap-8 group/btn"
-                    >
-                      <div className="w-24 h-24 rounded-full bg-remy-sand/20 border border-remy-sand/40 flex items-center justify-center text-remy-sand animate-pulse group-hover/btn:scale-110 transition-transform shadow-[0_0_40px_rgba(214,195,163,0.3)]">
-                        <VolumeX size={56} />
-                      </div>
-                      <span className="text-white text-[14px] uppercase tracking-[0.4em] font-bold bg-black/70 px-8 py-4 rounded-full backdrop-blur-2xl border border-white/10 shadow-2xl">
-                        Click to activate sound
-                      </span>
-                    </button>
-                  )}
                 </motion.div>
               </AnimatePresence>
             </div>

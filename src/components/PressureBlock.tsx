@@ -18,7 +18,7 @@ export default function PressureBlock() {
         >
           <h3 className="text-3xl md:text-5xl font-cinzel text-white/80 leading-[1.1] tracking-tighter uppercase">
             While you are reading this, <br />
-            your next patient <br className="md:hidden" />
+            your next client <br className="md:hidden" />
             is searching.
           </h3>
 

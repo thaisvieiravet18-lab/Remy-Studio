@@ -33,7 +33,7 @@ export default function About() {
           className="space-y-8 text-white/60 font-poppins text-base md:text-lg leading-relaxed max-w-3xl mx-auto"
         >
           <p>
-            We believe that healthcare professionals should not waste time with technical complexities. While you dedicate yourself to saving and transforming lives, we build the infrastructure that sustains your growth.
+            We believe that Veterinary professionals should not waste time with technical complexities. While you dedicate yourself to saving and transforming lives, we build the infrastructure that sustains your growth.
           </p>
           <p>
             We unite high-end design, persuasive copywriting, and cutting-edge technology to create a digital presence that doesn't just exist but dominates the market.

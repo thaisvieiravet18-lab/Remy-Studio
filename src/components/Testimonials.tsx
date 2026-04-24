@@ -5,24 +5,24 @@ import { useState, useEffect } from 'react';
 const testimonials = [
   {
     id: 1,
-    name: 'Dr. Beatriz Silva',
-    role: 'Dermatologist',
-    text: 'Remy Studio completely transformed my online presence. The new site isn\'t just beautiful, it actually converts. I saw a 40% increase in WhatsApp bookings in the first month.',
-    image: 'https://images.unsplash.com/photo-1559839734-2b71f1e3c770?q=80&w=200&auto=format&fit=crop',
+    name: 'Beatriz Silva',
+    role: 'Dog Trainer',
+    text: 'Remy Studio completely transformed my online presence. The new site isn\'t just beautiful, it actually converts. I saw a 40% increase in bookings in the first month.',
+    image: 'https://images.unsplash.com/photo-1517423568366-8b83523034fd?q=80&w=400&auto=format&fit=crop',
   },
   {
     id: 2,
     name: 'Dr. Marcos Oliveira',
-    role: 'Plastic Surgeon',
+    role: 'Veterinary Surgeon',
     text: 'The management system Remy developed for my clinic saved my team hours of manual work. Sophistication and efficiency I haven\'t found anywhere else.',
-    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=200&auto=format&fit=crop',
   },
   {
     id: 3,
-    name: 'Dr. Helena Costa',
-    role: 'Aesthetic Dentistry',
-    text: 'The reels produced by Remy elevated my Instagram level. Now I attract the right audience, which values my work and not just the price. An indispensable partnership.',
-    image: 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=200&auto=format&fit=crop',
+    name: 'Dra. Helena Costa',
+    role: 'Veterinary Odontology',
+    text: 'The reels produced by Remy elevated my Instagram level. Now I attract the right audience, which values my work and expertise. An indispensable partnership.',
+    image: 'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=200&auto=format&fit=crop',
   },
 ];
 

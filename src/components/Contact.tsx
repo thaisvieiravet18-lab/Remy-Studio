@@ -36,7 +36,7 @@ export default function Contact() {
           transition={{ delay: 0.2 }}
           className="text-xl md:text-2xl text-white/70 font-poppins font-light mb-16 max-w-2xl mx-auto"
         >
-          The difference? They didn't wait. Don't leave your clinic for later.
+          The difference? They didn't wait. Don't leave your Veterinary growth for later.
         </motion.p>
 
         <motion.div

@@ -1,13 +1,17 @@
 import { Instagram, MessageCircle } from 'lucide-react';
+import { Logo } from './Logo';
 
 export default function Footer() {
   return (
     <footer className="bg-[#0b0b0b] border-t border-remy-sand/10 py-20 px-6 md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
         <div className="col-span-1 md:col-span-2">
-          <h2 className="text-3xl font-cinzel text-remy-sand mb-6">REMY STUDIO</h2>
+          <div className="flex items-center gap-4 mb-6 group -ml-6 md:-ml-10">
+            <Logo className="w-32 h-32 group-hover:scale-110 transition-transform duration-500" />
+            <h2 className="text-3xl font-cinzel text-remy-sand">REMY STUDIO</h2>
+          </div>
           <p className="text-remy-offwhite/60 max-w-sm mb-8 leading-relaxed">
-            Design that sells. Results that stay. We transform the digital presence of healthcare professionals with sophistication and strategy.
+            Design that sells. Results that stay. We transform the digital presence of Veterinary professionals with sophistication and strategy.
           </p>
           <div className="flex space-x-6">
             <a 
@@ -54,7 +58,7 @@ export default function Footer() {
           © {new Date().getFullYear()} Remy Studio. All rights reserved.
         </p>
         <p className="text-[12px] uppercase tracking-[0.1em] text-remy-offwhite/40">
-          Sophisticated design for healthcare.
+          Sophisticated design for veterinary medicine.
         </p>
       </div>
     </footer>

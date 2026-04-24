@@ -6,24 +6,24 @@ const projects = [
   {
     id: 1,
     name: "CATLIFE",
-    context: "Clinic specializing in felines. Need to convey safety and specialization.",
-    developed: "A livelier and more welcoming site with a focus on specific structure and exams.",
-    result: "Premium positioning and increased value perception.",
+    context: "Veterinary clinic specializing in felines. Need to convey safety and specialization.",
+    developed: "A more welcoming and strategic Veterinary site with a focus on specific structure and feline exams.",
+    result: "Premium positioning and increased value perception for pet owners.",
     video: "https://www.youtube.com/watch?v=w0jfYyOi3jo",
   },
   {
     id: 2,
     name: "DOGTRAINER",
-    context: "Sale of training plans with extreme customization needs.",
-    developed: "Intelligent post-purchase questionnaire that generates a tailored plan for the pet.",
+    context: "Sale of Veterinary training plans with extreme customization needs.",
+    developed: "Intelligent Veterinary questionnaire that generates a tailored plan for the pet, maximizing automation.",
     result: "Process 70% more efficient and higher owner satisfaction.",
     video: "youtu.be/swb_jtMajKk",
   },
   {
     id: 3,
     name: "KAHUCARE",
-    context: "Dog daycare management that suffered from lack of control and poor communication.",
-    developed: "Website with full history, dietary check-up and real-time chat.",
+    context: "Veterinary dog daycare management that suffered from lack of control and poor communication.",
+    developed: "Veterinary website with full history, dietary check-up and real-time chat for clinics.",
     result: "Total operational control and much more relaxed owners.",
     video: "https://www.youtube.com/watch?v=ebqOwdaf1uU",
   }
@@ -38,6 +38,7 @@ function getYoutubeId(url: string) {
 export default function Portfolio() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -54,8 +55,52 @@ export default function Portfolio() {
   };
   const toggleSound = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setIsMuted(!isMuted);
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
   };
+
+  // Sync YouTube Player state
+  useEffect(() => {
+    if (iframeRef.current?.contentWindow) {
+      const targetMute = isMuted;
+      
+      const sendCommand = () => {
+        if (!iframeRef.current?.contentWindow) return;
+        
+        iframeRef.current.contentWindow.postMessage(
+          JSON.stringify({ 
+            event: "command", 
+            func: targetMute ? "mute" : "unMute",
+            args: []
+          }), 
+          "*"
+        );
+        
+        if (!targetMute) {
+          iframeRef.current.contentWindow.postMessage(
+            JSON.stringify({ 
+              event: "command", 
+              func: "setVolume",
+              args: [100]
+            }), 
+            "*"
+          );
+          iframeRef.current.contentWindow.postMessage(
+            JSON.stringify({ 
+              event: "command", 
+              func: "playVideo",
+              args: []
+            }), 
+            "*"
+          );
+        }
+      };
+
+      sendCommand();
+      const timeout = setTimeout(sendCommand, 500);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, isMuted]);
 
 
   return (
@@ -110,59 +155,46 @@ export default function Portfolio() {
                 {/* Camera */}
                 <div className="absolute top-4 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-[#2a2a2a] rounded-full z-20 shadow-inner" />
                 
-                {/* Screen Content */}
-                <div className="absolute inset-[14px] bottom-0 bg-black rounded-t-2xl overflow-hidden">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={currentIndex} // RECARREGA APENAS NA TROCA DE PROJETO
-                      initial={{ opacity: 0, scale: 1.05 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
-                      className="w-full h-full relative"
-                    >
-                      {getYoutubeId(projects[currentIndex].video) ? (
-                        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-                          <iframe
-                            src={`https://www.youtube.com/embed/${getYoutubeId(projects[currentIndex].video)}?autoplay=1&mute=${isMuted ? 1 : 0}&controls=0&loop=1&playlist=${getYoutubeId(projects[currentIndex].video)}&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&playsinline=1`}
-                            frameBorder="0"
-                            allow="autoplay"
-                            sandbox="allow-forms allow-scripts allow-same-origin allow-presentation"
-                            className="absolute inset-0 w-[110%] h-[110%] -left-[5%] -top-[5%] pointer-events-none"
-                            title="Project Video"
-                          />
-                          {/* Transparent Overlay to block any remaining interactions */}
-                          <div className="absolute inset-0 z-10 bg-transparent" />
-                        </div>
-                      ) : (
-                      <video
+                  <div className="absolute inset-[14px] bottom-0 bg-black rounded-t-2xl overflow-hidden">
+                    <AnimatePresence mode="wait">
+                      <motion.div
                         key={currentIndex}
-                        autoPlay
-                        muted={isMuted}
-                        loop
-                        playsInline
-                        crossOrigin="anonymous"
-                        className="w-full h-full object-cover opacity-90"
+                        initial={{ opacity: 0, scale: 1.05 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                        className="w-full h-full relative"
                       >
-                        <source src={projects[currentIndex].video} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
-                    )}
-                    {/* Glass Reflection */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
-
-                    {/* Notebook Volume Control */}
-                    <div className="absolute top-6 right-6 z-40 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button 
-                        onClick={toggleSound}
-                        className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-remy-sand hover:text-black transition-all"
-                      >
-                        {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                      </button>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
+                        {getYoutubeId(projects[currentIndex].video) ? (
+                          <div className="absolute inset-0 w-full h-full overflow-hidden">
+                            <iframe
+                              ref={iframeRef}
+                              src={`https://www.youtube.com/embed/${getYoutubeId(projects[currentIndex].video)}?autoplay=1&mute=0&controls=0&loop=1&playlist=${getYoutubeId(projects[currentIndex].video)}&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1&origin=${window.location.origin}`}
+                              frameBorder="0"
+                              allow="autoplay"
+                              className="absolute w-[130%] h-[130%] -left-[15%] -top-[15%]"
+                              title="Project Video"
+                            />
+                          </div>
+                        ) : (
+                          <video
+                            key={currentIndex}
+                            autoPlay
+                            muted={isMuted}
+                            loop
+                            playsInline
+                            crossOrigin="anonymous"
+                            className="w-full h-full object-cover opacity-90"
+                          >
+                            <source src={projects[currentIndex].video} type="video/mp4" />
+                            Your browser does not support the video tag.
+                          </video>
+                        )}
+                        {/* Glass Reflection */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
 
                 {/* Navigation Arrows */}
                 <button 
